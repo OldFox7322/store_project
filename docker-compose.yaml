@@ -1,0 +1,46 @@
+
+services:
+  db_dev:
+    image: postgres:16-alpine
+    container_name: postgres_dev
+    env_file:
+      - .env 
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432" 
+    volumes:
+      - dev_pgdata:/var/lib/postgresql/data 
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready', '-U', '${DB_USER}', "-d", "${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+
+  db_test:
+    image: postgres:16-alpine
+    container_name: postgres_test
+    environment:
+      POSTGRES_DB: test_db
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+    ports:
+      - "5433:5432" 
+    volumes:
+      - test_pgdata:/var/lib/postgresql/data 
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready', '-U', 'test_user', "-d", "test_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+
+
+volumes:
+  dev_pgdata:
+  test_pgdata:
