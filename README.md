@@ -37,10 +37,9 @@ DB_PASSWORD = your_db_password # For example, your_db_password_123
 ALEMBIC_DATABASE_URL="postgresql://your_db_user:your_db_password@localhost:5432/your_db_name" # Substitute your real values
 ALEMBIC_TEST_DATABASE_URL="postgresql://test_user:test_password@localhost:5433/test_db"
 
-DATABASE_URL = "postgresql+asyncpg://your_db_user:your_db_password@localhost:5432/your_db_name"
+DATABASE_URL = "postgresql://your_db_user:your_db_password@localhost:5432/your_db_name"
 
-TEST_DATABASE_URL="postgresql+asyncpg://test_user:test_password@localhost:5433/test_db"
-Separate variables are needed for Alembic migrations and for connection because Alembic does not support asynchronous connections, but this does not affect the application's operation.
+TEST_DATABASE_URL="postgresql://test_user:test_password@localhost:5433/test_db"
 
 Next, you need to install Docker Desktop, where your database will be located:
 https://www.docker.com/products/docker-desktop/
