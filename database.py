@@ -21,7 +21,7 @@ class User(Base):
 	__tablename__='users'
 	id = Column(Integer, primary_key=True, unique=True, index=True, autoincrement=True)
 	email = Column(String, unique=True, index=True)
-	role = Column(String, default='admin')
+	role = Column(String, default='user')
 	hashed_password = Column(String)
 	balance = Column(Float, default=0)
 	bonus_points = Column(Float, default=0)
