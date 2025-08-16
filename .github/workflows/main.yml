@@ -1,0 +1,58 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+
+jobs:
+  build-and-test:
+    name: Build, Test, and Migrate
+
+    runs-on: ubuntu-latest
+
+
+    steps:
+      # 1 Step
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+
+      # 2 Step
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+
+      # 3 Step
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # 4 Step
+      - name: Apply Alembic Migrations
+        env:
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
+          TEST_DATABASE_URL: ${{secrets.TEST_DATABASE_URL}}
+        run: |
+          alembic upgrade head
+
+
+      # 5 Step
+      - name: Run Test
+        env:
+          ALGORITHM: ${{secrets.ALGORITHM}}
+          SECRET_KEY: ${{secrets.SECRET_KEY}}
+          ALEMBIC_DATABASE_URL: ${{secrets.ALEMBIC_DATABASE_URL}}
+          ALEMBIC_TEST_DATABASE_URL: ${{secrets.ALEMBIC_TEST_DATABASE_URL}}
+        run: |
+          pytest
+
+
