@@ -134,6 +134,13 @@ async def delete(current_user: User = Depends(get_current_user), db: AsyncSessio
 	user = result.scalar_one_or_none()
 	if not user:
 		raise UserNotFoundException()
+	# result = await db.execute(select(Order).options(selectinload(Order.order_for_order_items)).filter(
+	# 	Order.user_id == current_user.id,
+	# 	Order.order_status == 'pending'
+	# 	))
+	# cart = result.unique().scalar_one_or_none()
+	# if  cart:
+	# 	await db.delete(cart)
 	await db.delete(user)
 	try:
 		await db.commit()

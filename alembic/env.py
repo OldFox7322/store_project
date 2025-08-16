@@ -8,7 +8,7 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from dotenv import load_dotenv
 from alembic import context
-from main import Base
+from database import Base
 load_dotenv()
 
 # this is the Alembic Config object, which provides
