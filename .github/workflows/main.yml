@@ -51,6 +51,8 @@ jobs:
       # 5 Step
       - name: Run Test
         env:
+          DATABASE_URL: ${{secrets.ALEMBIC_DATABASE_URL}}
+          TEST_DATABASE_URL: ${{secrets.ALEMBIC_TEST_DATABASE_URL}}
           ALGORITHM: ${{secrets.ALGORITHM}}
           SECRET_KEY: ${{secrets.SECRET_KEY}}
         run: |
