@@ -32,7 +32,7 @@ sleep 10
 
 
 
-echo "3 Activation virtual environment"
+echo "3 Activation virtual environment "
 
 source venv/bin/activate
 if [ -z "$VIRTUAL_ENV" ]; then
